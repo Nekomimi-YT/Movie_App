@@ -13,14 +13,21 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {f
 //set up the logger
 app.use(morgan('combined', {stream: accessLogStream}));
 
+//Two examples of GET method returning JSON and text data
 app.get('/movies', (req, res) => {
   res.json(topTenMovies);
-})
+});
 
 app.get('/', (req, res) => {
   res.send(`<p>Welcome to ${req.url}, the future home of the MovieApp!</p>`);
 });
 
+//log all application-level errors to the terminal
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something\'s wrong!');
+});
+
 app.listen(8080, () => {
   console.log('Up and running on port 8080!');
-})
+});

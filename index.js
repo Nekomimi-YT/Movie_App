@@ -22,6 +22,9 @@ app.get('/', (req, res) => {
   res.send(`<p>Welcome to ${req.url}, the future home of the MovieApp!</p>`);
 });
 
+//route requests for static files to the /public folder
+app.use(express.static('public'));
+
 //log all application-level errors to the terminal
 app.use((err, req, res, next) => {
   console.error(err.stack);

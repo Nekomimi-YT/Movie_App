@@ -13,6 +13,9 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {f
 //set up the logger
 app.use(morgan('combined', {stream: accessLogStream}));
 
+//route requests for static files to the /public folder
+app.use(express.static('public'));
+
 //Two examples of GET method returning JSON and text data
 app.get('/movies', (req, res) => {
   res.json(topTenMovies);
@@ -22,8 +25,9 @@ app.get('/', (req, res) => {
   res.send(`<p>Welcome to ${req.url}, the future home of the MovieApp!</p>`);
 });
 
-//route requests for static files to the /public folder
-app.use(express.static('public'));
+app.get('/documentation', (req, res) => {
+  res.sendFile('public/documentation.html', { root: __dirname });
+});
 
 //log all application-level errors to the terminal
 app.use((err, req, res, next) => {

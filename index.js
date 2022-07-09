@@ -56,7 +56,7 @@ let topTenMovies = [
     director: 'James Cameron',
     year: '1981'
   }
-]
+];
 
 const app = express();
 //create a write stream in append mode
@@ -69,7 +69,7 @@ app.use(morgan('combined', {stream: accessLogStream}));
 //route requests for static files to the /public folder
 app.use(express.static('public'));
 
-//Two examples of GET method returning JSON and text data
+//GET methods returning JSON and text data and static files
 app.get('/movies', (req, res) => {
   res.json(topTenMovies);
 });

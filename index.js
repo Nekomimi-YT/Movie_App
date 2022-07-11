@@ -78,6 +78,16 @@ app.get('/movies', (req, res) => {
   res.status(200).json(movies);
 });
 
+app.get('/movies/:title', (req, res) => {
+  const { title } = req.params; //object destructuring (const title = res.params.title;)
+  const movie = movies.find(movie => movie.title === title);
+  if (movie) {
+    res.status(200).json(movie);
+  } else {
+    res.status(400).send(`${title} not found.`);
+  } 
+});
+
 app.get('/', (req, res) => {
   res.send(`<p>Welcome to ${req.url}, the future home of the MovieApp!</p>`);
 });

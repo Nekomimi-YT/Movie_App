@@ -7,12 +7,26 @@ const uuid = require('uuid');
 const fs = require('fs');
 const path = require('path');
 
-let users = [];
+let users = [
+  {
+    id: 1,
+    name: 'Kim',
+    favoriteMovies: []
+  },
+  {
+    id: 2,
+    name: 'Joe',
+    favoriteMovies: ['Dune']
+  }
+];
 
 let movies = [
   {
     title: 'Blue Velvet',
-    director: 'David Lynch',
+    director: {
+      name: 'David Lynch',
+      age: '50'
+    },
     description: 'Kinda Crazy',
     genre: {
       name: 'Drama-thriller',
@@ -22,7 +36,10 @@ let movies = [
   },
   {
     title: 'Dune',
-    director: 'David Lynch',
+    director: {
+      name: 'David Lynch',
+      age: '50'
+    },
     description: 'Dune: Desert Planet',
     genre: {
       name: 'Sci-fi',
@@ -32,20 +49,31 @@ let movies = [
   },
   {
     title: 'Twin Peaks: Fire Walk with Me',
-    director: 'David Lynch',
+    director: {
+      name: 'David Lynch',
+      age: '50'
+    },
     description: 'Talking backwards',
     genre: {
       name: 'Comedy-drama-thriller',
       description: 'Dramatic thriller with comedic awkwardness'
     },
     year: '1992'
-  }
-  /*{
-    title: 'Alien',
-    director: 'Ridley Scott',
-    year: '1979'
   },
   {
+    title: 'Alien',
+    director: {
+      name: 'Ridley Scott',
+      age: '66'
+    },
+    description: 'In space, noone can hear you scream...',
+    genre: {
+      name: 'Sci-fi and horror',
+      description: 'Scary sci-fi'
+    },
+    year: '1979'
+  },
+ /* {
     title: 'Blade Runner',
     director: 'Ridley Scott',
     year: '1982'
@@ -54,18 +82,26 @@ let movies = [
     title: 'House of Gucci',
     director: 'Ridley Scott',
     year: '2021'
-  },
+  }, 
   {
     title: 'Aliens',
     director: 'James Cameron',
     year: '1986'
-  },
+  }, */
   {
     title: 'The Abyss',
-    director: 'James Cameron',
+    director: {
+      name: 'James Cameron',
+      age: '70'
+    },
+    description: 'Underwater thriller',
+    genre: {
+      name: 'Thriller',
+      description: 'Suspenseful on the edge'
+    },
     year: '1989'
-  },
-  {
+  }
+  /*{
     title: 'Terminator 2: Judgement Day',
     director: 'James Cameron',
     year: '1991'
@@ -88,7 +124,7 @@ app.use(morgan('combined', {stream: accessLogStream}));
 //route requests for static files to the /public folder
 app.use(express.static('public'));
 
-//GET methods returning JSON and text data and static files
+//GET methods returning JSON data from /movies searches
 app.get('/movies', (req, res) => {
   res.status(200).json(movies);
 });
@@ -112,6 +148,17 @@ app.get('/movies/genre/:genreName', (req, res) => {
     res.status(200).json(genre);
   } else {
     res.status(400).send(`${genreName} not found.`);  //else statement not recognized
+  } 
+});
+
+app.get('/movies/director/:directorName', (req, res) => {
+  const { directorName } = req.params; 
+  const director = movies.find( movie => movie.director.name === directorName).director;
+
+  if (director) {
+    res.status(200).json(director);
+  } else {
+    res.status(400).send(`${directorName} not found.`);  //else statement not recognized
   } 
 });
 

@@ -13,19 +13,34 @@ let movies = [
   {
     title: 'Blue Velvet',
     director: 'David Lynch',
+    description: 'Kinda Crazy',
+    genre: {
+      name: 'Drama-thriller',
+      description: 'Dramatic thriller'
+    },
     year: '1986'
   },
   {
     title: 'Dune',
     director: 'David Lynch',
+    description: 'Dune: Desert Planet',
+    genre: {
+      name: 'Sci-fi',
+      description: 'Fictional storytelling focusing on scientific concepts'
+    },
     year: '1984'
   },
   {
     title: 'Twin Peaks: Fire Walk with Me',
     director: 'David Lynch',
+    description: 'Talking backwards',
+    genre: {
+      name: 'Comedy-drama-thriller',
+      description: 'Dramatic thriller with comedic awkwardness'
+    },
     year: '1992'
-  },
-  {
+  }
+  /*{
     title: 'Alien',
     director: 'Ridley Scott',
     year: '1979'
@@ -59,7 +74,7 @@ let movies = [
     title: 'Escape from New York',
     director: 'James Cameron',
     year: '1981'
-  }
+  }*/
 ];
 
 const app = express();
@@ -81,10 +96,22 @@ app.get('/movies', (req, res) => {
 app.get('/movies/:title', (req, res) => {
   const { title } = req.params; //object destructuring (const title = res.params.title;)
   const movie = movies.find(movie => movie.title === title);
+
   if (movie) {
     res.status(200).json(movie);
   } else {
     res.status(400).send(`${title} not found.`);
+  } 
+});
+
+app.get('/movies/genre/:genreName', (req, res) => {
+  const { genreName } = req.params; 
+  const genre = movies.find( movie => movie.genre.name === genreName).genre;
+
+  if (genre) {
+    res.status(200).json(genre);
+  } else {
+    res.status(400).send(`${genreName} not found.`);  //else statement not recognized
   } 
 });
 

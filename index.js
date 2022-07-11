@@ -5,7 +5,9 @@ const morgan = require('morgan');
 const fs = require('fs');
 const path = require('path');
 
-let topTenMovies = [
+let users = [];
+
+let movies = [
   {
     title: 'Blue Velvet',
     director: 'David Lynch',
@@ -71,7 +73,7 @@ app.use(express.static('public'));
 
 //GET methods returning JSON and text data and static files
 app.get('/movies', (req, res) => {
-  res.json(topTenMovies);
+  res.json(movies);
 });
 
 app.get('/', (req, res) => {

@@ -75,7 +75,7 @@ app.use(express.static('public'));
 
 //GET methods returning JSON and text data and static files
 app.get('/movies', (req, res) => {
-  res.json(movies);
+  res.status(200).json(movies);
 });
 
 app.get('/', (req, res) => {

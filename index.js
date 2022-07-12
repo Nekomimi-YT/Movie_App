@@ -166,7 +166,7 @@ app.put('/users/:id/:movieTitle', (req, res) => {
   if (!user) {
     res.status(400).send(`No user with that ID.`);
   } else {
-    const checkTitle = user.favoriteMovies.find(title => title === movieTitle);
+    const checkTitle = user.favoriteMovies.find(title => title === movieTitle); //use .find for find and match 
     if (checkTitle) {
       res.status(400).send(`Movie title is already on the list!`);
     } else {
@@ -184,7 +184,7 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
   if (!user) {
     res.status(400).send(`No user with that ID.`);
   } else {
-    user.favoriteMovies = user.favoriteMovies.filter(title => title !== movieTitle); //create array w/out movieTitle
+    user.favoriteMovies = user.favoriteMovies.filter(title => title !== movieTitle); //use .filter to create array w/out movieTitle
     res.status(200).send(`${movieTitle} has been removed from user ${id}'s favorite movies array!`);
   }
 });

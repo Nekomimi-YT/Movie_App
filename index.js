@@ -172,7 +172,7 @@ app.put('/users/:id/:movieTitle', (req, res) => {
 
 //DELETE method to remove a favorite movie
 app.delete('/users/:id/:movieTitle', (req, res) => {
-  const { id, movieTitle } = req.params; // can pull 2 params in 1 statement
+  const { id, movieTitle } = req.params; 
 
   const user = users.find(user => user.id == id);  //truthy converts string to number
 
@@ -181,6 +181,20 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
   } else {
     user.favoriteMovies = user.favoriteMovies.filter(title => title !== movieTitle); //create array w/out movieTitle
     res.status(200).send(`${movieTitle} has been removed from user ${id}'s favorite movies array!`);
+  }
+});
+
+//DELETE method to remove a user
+app.delete('/users/:id', (req, res) => {
+  const { id } = req.params; 
+
+  const user = users.find(user => user.id == id);  //truthy converts string to number
+
+  if (!user) {
+    res.status(400).send(`No user with that ID.`);
+  } else {
+    users = users.filter(user => user.id != id); //create array w/out movieTitle
+    res.status(200).send(`User ${id} has been removed.`);
   }
 });
 

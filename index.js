@@ -156,6 +156,20 @@ app.put('/users/:id', (req, res) => {
   }
 });
 
+//PUT method to update user's favorite movies (UPDATE)
+app.put('/users/:id/:movieTitle', (req, res) => {
+  const { id, movieTitle } = req.params; // can pull 2 params in 1 statement
+
+  const user = users.find(user => user.id == id);  //truthy converts string to number
+
+  if (!user) {
+    res.status(400).send(`No user with that ID.`);
+  } else {
+    user.favoriteMovies.push(movieTitle);
+    res.status(200).send(`${movieTitle} has been added to Id# ${id} favorite movies array!`);
+  }
+});
+
 //GET methods returning JSON data from /movies searches (CREATE)
 app.get('/movies', (req, res) => {
   res.status(200).json(movies);

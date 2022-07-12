@@ -114,6 +114,7 @@ let movies = [
 ];
 
 const app = express();
+
 //create a write stream in append mode
 //log is added to the log.txt file in the root directory
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'});
@@ -170,7 +171,7 @@ app.put('/users/:id/:movieTitle', (req, res) => {
   }
 });
 
-//DELETE method to remove a favorite movie
+//DELETE method to remove a favorite movie (DELETE)
 app.delete('/users/:id/:movieTitle', (req, res) => {
   const { id, movieTitle } = req.params; 
 
@@ -184,7 +185,7 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
   }
 });
 
-//DELETE method to remove a user
+//DELETE method to remove a user (DELETE)
 app.delete('/users/:id', (req, res) => {
   const { id } = req.params; 
 
@@ -198,11 +199,12 @@ app.delete('/users/:id', (req, res) => {
   }
 });
 
-//GET methods returning JSON data from /movies searches (CREATE)
+//GET method returning all movies as JSON objects (CREATE)
 app.get('/movies', (req, res) => {
   res.status(200).json(movies);
 });
 
+//GET method returning a movie by title as a JSON object (CREATE)
 app.get('/movies/:title', (req, res) => {
   const { title } = req.params; //object destructuring (const title = res.params.title;)
   const movie = movies.find(movie => movie.title === title);
@@ -214,6 +216,7 @@ app.get('/movies/:title', (req, res) => {
   } 
 });
 
+//GET method returning genre and genre description as a JSON object (CREATE)
 app.get('/movies/genre/:genreName', (req, res) => {
   const { genreName } = req.params; 
   const genre = movies.find( movie => movie.genre.name === genreName).genre;
@@ -225,6 +228,7 @@ app.get('/movies/genre/:genreName', (req, res) => {
   } 
 });
 
+//GET method returning director and director bio info as a JSON object (CREATE)
 app.get('/movies/director/:directorName', (req, res) => {
   const { directorName } = req.params; 
   const director = movies.find( movie => movie.director.name === directorName).director;
@@ -236,6 +240,7 @@ app.get('/movies/director/:directorName', (req, res) => {
   } 
 });
 
+//GET methods returning HTML files (CREATE)
 app.get('/', (req, res) => {
   res.send(`<p>Welcome to ${req.url}, the future home of the MovieApp!</p>`);
 });

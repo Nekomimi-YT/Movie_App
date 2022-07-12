@@ -166,7 +166,21 @@ app.put('/users/:id/:movieTitle', (req, res) => {
     res.status(400).send(`No user with that ID.`);
   } else {
     user.favoriteMovies.push(movieTitle);
-    res.status(200).send(`${movieTitle} has been added to Id# ${id} favorite movies array!`);
+    res.status(200).send(`${movieTitle} has been added to user ${id}'s favorite movies array!`);
+  }
+});
+
+//DELETE method to remove a favorite movie
+app.delete('/users/:id/:movieTitle', (req, res) => {
+  const { id, movieTitle } = req.params; // can pull 2 params in 1 statement
+
+  const user = users.find(user => user.id == id);  //truthy converts string to number
+
+  if (!user) {
+    res.status(400).send(`No user with that ID.`);
+  } else {
+    user.favoriteMovies = user.favoriteMovies.filter(title => title !== movieTitle); //create array w/out movieTitle
+    res.status(200).send(`${movieTitle} has been removed from user ${id}'s favorite movies array!`);
   }
 });
 

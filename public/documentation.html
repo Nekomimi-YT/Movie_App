@@ -36,21 +36,21 @@
       <tr>
         <td>Return data (description, genre, director, image URL, 
           whether it’s featured or not) about a single movie by title to the user</td>
-        <td>/movies/:title</td>
+        <td>/movies/:Title</td>
         <td>GET</td>
         <td>None</td>
         <td>A JSON object holding all the data about requested movie title</td>
       </tr>
       <tr>
         <td>Return data about a genre (description) by name/title (e.g., “Thriller”)</td>
-        <td>/movies/genre/:genreName</td>
+        <td>/movies/Genre/:genreName</td>
         <td>GET</td>
         <td>None</td>
         <td>A JSON object holding the data for the genre type (description) and more info about requested genre description</td>
       </tr>
       <tr>
         <td>Return data about a director (bio, birth year, death year) by name</td>
-        <td>/movies/director/:directorName</td>
+        <td>/movies/Director/:directorName</td>
         <td>GET</td>
         <td>None</td>
         <td>Return a JSON object with data about a movie's director</td>
@@ -71,21 +71,21 @@
       </tr>
       <tr>
         <td>Allow users to add a movie to their list of favorite movies</td>
-        <td>/users/:id/:movieTitle</td>
+        <td>/users/:_id/:Title</td>
         <td>PUT</td>
         <td>None</td>
         <td>A text message indicating that the new favorite movie has been added.</td>
       </tr>
       <tr>
         <td>Allow users to delete a movie from their list of favorite movies</td>
-        <td>/users/:id/:movieTitle</td>
+        <td>/users/:_id/:Title</td>
         <td>DELETE</td>
         <td>None</td>
         <td>A text message indicating that movie has been deleted.</td>
       </tr>
       <tr>
-        <td>Allow existing users to deregister</td>
-        <td>/users/:id</td>
+        <td>Allow existing users to deregister by username</td>
+        <td>/users/:Username</td>
         <td>DELETE</td>
         <td>None</td>
         <td>A text message showing that a user email has been removed.</td>

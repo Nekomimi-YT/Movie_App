@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
-mongoose.connect('mongodb://localhost:27017/myFlixDB', { userNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const express = require('express');
 const morgan = require('morgan');
@@ -13,112 +13,7 @@ const uuid = require('uuid');
 //appending Morgan logs to a file: need built-in node modules fs and path
 const fs = require('fs');
 const path = require('path');
-
-let users = [
-  {
-    id: 1,
-    name: 'Kim',
-    favoriteMovies: []
-  },
-  {
-    id: 2,
-    name: 'Joe',
-    favoriteMovies: ['Dune']
-  }
-];
-
-let movies = [
-  {
-    title: 'Blue Velvet',
-    director: {
-      name: 'David Lynch',
-      age: '50'
-    },
-    description: 'Kinda Crazy',
-    genre: {
-      name: 'Drama-thriller',
-      description: 'Dramatic thriller'
-    },
-    year: '1986'
-  },
-  {
-    title: 'Dune',
-    director: {
-      name: 'David Lynch',
-      age: '50'
-    },
-    description: 'Dune: Desert Planet',
-    genre: {
-      name: 'Sci-fi',
-      description: 'Fictional storytelling focusing on scientific concepts'
-    },
-    year: '1984'
-  },
-  {
-    title: 'Twin Peaks: Fire Walk with Me',
-    director: {
-      name: 'David Lynch',
-      age: '50'
-    },
-    description: 'Talking backwards',
-    genre: {
-      name: 'Comedy-drama-thriller',
-      description: 'Dramatic thriller with comedic awkwardness'
-    },
-    year: '1992'
-  },
-  {
-    title: 'Alien',
-    director: {
-      name: 'Ridley Scott',
-      age: '66'
-    },
-    description: 'In space, noone can hear you scream...',
-    genre: {
-      name: 'Sci-fi and horror',
-      description: 'Scary sci-fi'
-    },
-    year: '1979'
-  },
- /* {
-    title: 'Blade Runner',
-    director: 'Ridley Scott',
-    year: '1982'
-  },
-  {
-    title: 'House of Gucci',
-    director: 'Ridley Scott',
-    year: '2021'
-  }, 
-  {
-    title: 'Aliens',
-    director: 'James Cameron',
-    year: '1986'
-  }, */
-  {
-    title: 'The Abyss',
-    director: {
-      name: 'James Cameron',
-      age: '70'
-    },
-    description: 'Underwater thriller',
-    genre: {
-      name: 'Thriller',
-      description: 'Suspenseful on the edge'
-    },
-    year: '1989'
-  }
-  /*{
-    title: 'Terminator 2: Judgement Day',
-    director: 'James Cameron',
-    year: '1991'
-  },
-  {
-    title: 'Lost in Translation',
-    director: 'Sophia Coppola',
-    year: '2003'
-  }*/
-];
+const { clear } = require('console');
 
 const app = express();
 
@@ -213,7 +108,14 @@ app.delete('/users/:id', (req, res) => {
 
 //GET method returning all movies as JSON objects (CREATE)
 app.get('/movies', (req, res) => {
-  res.status(200).json(movies);
+  Movies.find()
+  .then((movies) => {
+    res.status(200).json(movies);
+})
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send(`Error: ${err}`);
+  });
 });
 
 //GET method returning a movie by title as a JSON object (CREATE)
@@ -254,7 +156,7 @@ app.get('/movies/director/:directorName', (req, res) => {
 
 //GET methods returning HTML files (CREATE)
 app.get('/', (req, res) => {
-  res.send(`<p>Welcome to ${req.url}, the future home of the MovieApp!</p>`);
+  res.send(`<p>Welcome to the future home of the myFlix App!</p>`);
 });
 
 app.get('/documentation', (req, res) => {

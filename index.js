@@ -134,6 +134,7 @@ app.use(express.static('public'));
 
 //use body-parser
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //POST method to add a new user or update user information (CREATE)
 app.post('/users', (req, res) => {

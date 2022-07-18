@@ -1,3 +1,10 @@
+//Set up mongoose to connect to myFlixDB (MongoDB)
+const mongoose = require('mongoose');
+const Models = require('./models.js');
+const Movies = Models.Movie;
+const Users = Models.User;
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { userNewUrlParser: true, useUnifiedTopology: true});
+
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
@@ -107,9 +114,9 @@ let movies = [
     year: '1991'
   },
   {
-    title: 'Escape from New York',
-    director: 'James Cameron',
-    year: '1981'
+    title: 'Lost in Translation',
+    director: 'Sophia Coppola',
+    year: '2003'
   }*/
 ];
 

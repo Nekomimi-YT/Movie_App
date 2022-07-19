@@ -105,22 +105,39 @@ app.post('/users/:username/movies/:movieID', (req, res) => {
 });
 
 //DELETE method to remove a favorite movie (DELETE)
-app.delete('/users/:id/:movieTitle', (req, res) => {
-  const { id, movieTitle } = req.params; 
-
-  const user = users.find(user => user.id == id);  //truthy converts string to number
-
-  if (!user) {
-    res.status(400).send(`No user with that ID.`);
-  } else {
-    user.favoriteMovies = user.favoriteMovies.filter(title => title !== movieTitle); //use .filter to create array w/out movieTitle
-    res.status(200).send(`${movieTitle} has been removed from user ${id}'s favorite movies array!`);
-  }
+app.delete('/users/:username/movies/:movieID', (req, res) => {
+  Users.findOneAndUpdate ( 
+    {Username: req.params.username}, 
+    { 
+      $pull: { favoriteMovies: req.params.movieID } 
+    },
+    { new: true } 
+   )
+  .then((updatedUser) => {
+    if (!updatedUser) {
+      res.status(400).send(`No user with that username.`);
+    } else {
+      res.json(updatedUser);
+    }
+  })
+  .catch((error) => {
+    res.status(500).send(`Error: ${error}`);
+  })
 });
 
 //DELETE method to remove a user (DELETE)
-app.delete('/users/:id', (req, res) => {
-  const { id } = req.params; 
+app.delete('/users/:username', (req, res) => {
+  Users.findOneAndRemove({ Username: req.params.username})
+    .then((user) => {
+      if (!user) {
+        res.status(400).send(`${req.params.username} was not found.`);
+      } else {
+        res.status(200).send(`${req.params.username} was deleted.`);
+      }
+    })
+});
+  
+  /*const { id } = req.params; 
 
   const user = users.find(user => user.id == id);  //truthy converts string to number
 
@@ -130,7 +147,7 @@ app.delete('/users/:id', (req, res) => {
     users = users.filter(user => user.id != id); //create array w/out movieTitle
     res.status(200).send(`User ${id} has been removed.`);
   }
-});
+});*/
 
 //GET method returning all movies as JSON objects (CREATE)
 app.get('/movies', (req, res) => {

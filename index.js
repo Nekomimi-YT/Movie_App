@@ -137,18 +137,6 @@ app.delete('/users/:username', (req, res) => {
     })
 });
   
-  /*const { id } = req.params; 
-
-  const user = users.find(user => user.id == id);  //truthy converts string to number
-
-  if (!user) {
-    res.status(400).send(`No user with that ID.`);
-  } else {
-    users = users.filter(user => user.id != id); //create array w/out movieTitle
-    res.status(200).send(`User ${id} has been removed.`);
-  }
-});*/
-
 //GET method returning all movies as JSON objects (CREATE)
 app.get('/movies', (req, res) => {
   Movies.find()

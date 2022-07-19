@@ -7,7 +7,7 @@
   <title>Document</title>
 </head>
 <body>
-  <h1>Movie Info App</h1>
+  <h1>myFlix App Documentation</h1>
   <p>
     <strong>Objective: </strong>To build the server-side component of a “movies” web application. The web
     application will provide users with access to information about different
@@ -45,12 +45,7 @@
         <td>/movies</td>
         <td>GET</td>
         <td>None</td>
-        <td>A JSON object holding the entire movie database<br>
-          Example:<br>
-          <code> {"_id": "12345",<br>
-            "Title: "Dune",<br>
-            "Description": "Movie Description"}</code>
-        </td>
+        <td>A JSON object containing the entire movie database</td>
       </tr>
       <tr>
         <td>Return data (description, genre, director, image URL, 
@@ -58,56 +53,100 @@
         <td>/movies/:title</td>
         <td>GET</td>
         <td>None</td>
-        <td>A JSON object holding all the data about requested movie title</td>
+        <td>A JSON object holding all available data about the requested movie title<br>
+          <code> {<br>
+            "_id": "12345",<br>
+            "Title: "Dune",<br>
+            "Description": "Movie Description",<br>
+            "Genre": "Sci-fi"<br>
+            .<br>
+            .<br>
+          }</code>
+        </td>
       </tr>
       <tr>
-        <td>Return data about a genre (description) by name/title (e.g., “Thriller”)</td>
+        <td>Return data about a genre (description) by movie's genre type (e.g., “Sci-fi”)</td>
         <td>/movies/genre/:genreName</td>
         <td>GET</td>
         <td>None</td>
-        <td>A JSON object holding the data for the genre type (description) and more info about requested genre description</td>
+        <td>A JSON object holding the data for the genre type (description) and more info about requested genre description<br>
+          <code> {<br>
+            "Name: "Sci-fi",<br>
+            "Description": "Scienc-ey and Fiction-ey!"<br>
+          }</code>
+          </td>
       </tr>
       <tr>
         <td>Return data about a director (bio, birth year, death year) by name</td>
         <td>/movies/director/:directorName</td>
         <td>GET</td>
         <td>None</td>
-        <td>Return a JSON object with data about a movie's director</td>
+        <td>Return a JSON object with data about a movie's director<br>
+          <code> {<br>
+            "Name: "Ridley Scott",<br>
+            "Description": "An English movie director..."<br>
+          }</code>
+        </td>
       </tr>
       <tr>
         <td>Allow new users to register</td>
         <td>/users</td>
         <td>POST</td>
-        <td>A JSON object holding data for the new user to add</td>
-        <td>A JSON object holding data that was added</td>
+        <td>A JSON object in the request body with user info to be added<br>
+          <code> {<br>
+            "Username: "myUsername",<br>
+            "Password": "myPassword",<br>
+            "Email: "myEmail",<br>
+            "Birthday: "1985-04-15"<br>
+          }</code>
+        </td>
+        <td>A JSON object holding the data that was added plus an assigned ID and FavoriteMovies array<br>
+          <code> {<br>
+            "_id" : "8a9b8c",<br>
+            "Username: "myUsername",<br>
+            "Password": "myPassword",<br>
+            "Email: "myEmail",<br>
+            "Birthday: "1985-04-15",<br>
+            "FavoriteMovies": []<br>
+          }</code>
+        </td>
       </tr>
       <tr>
         <td>Allow users to update their user info</td>
         <td>/users/:username</td>
         <td>PUT</td>
         <td>None</td>
-        <td>An updated JSON object holding all user data</td>
+        <td>An JSON object confirming updates and containing all user info</td>
       </tr>
       <tr>
         <td>Allow users to add a movie to their list of favorite movies</td>
         <td>/users/:username/movies/:movieID</td>
         <td>PUT</td>
         <td>None</td>
-        <td>A text message indicating that the new favorite movie has been added.</td>
+        <td>A JSON object of the user data confirming favorite movie added by movie ObjectID<br>
+          <code> {<br>
+            "_id" : "8a9b8c",<br>
+            "Username: "myUsername",<br>
+            "Password": "myPassword",<br>
+            "Email: "myEmail",<br>
+            "Birthday: "1985-04-15",<br>
+            "FavoriteMovies": ["dh4834hfjd376443"]<br>
+          }</code>
+        </td>
       </tr>
       <tr>
         <td>Allow users to delete a movie from their list of favorite movies</td>
         <td>/users/:username/movies/:movieID</td>
         <td>DELETE</td>
         <td>None</td>
-        <td>A text message indicating that movie has been deleted.</td>
+        <td>A JSON object of the user data confirming favorite movie deletion</td>
       </tr>
       <tr>
         <td>Allow existing users to deregister by username</td>
         <td>/users/:username</td>
         <td>DELETE</td>
         <td>None</td>
-        <td>A text message showing that a user email has been removed.</td>
+        <td>A text message stating that a user has been deleted</td>
       </tr>
     </tbody>
   </table>

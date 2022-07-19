@@ -83,22 +83,25 @@ app.put('/users/:username', (req, res) => {
     });  
 });
 
-//PUT method to update user's favorite movies (UPDATE)
-app.put('/users/:id/:movieTitle', (req, res) => {
-  const { id, movieTitle } = req.params; // can pull 2 params in 1 statement
-
-  const user = users.find(user => user.id == id);  //truthy converts string to number
-
-  if (!user) {
-    res.status(400).send(`No user with that ID.`);
-  } else {
-    const checkTitle = user.favoriteMovies.find(title => title === movieTitle); //use .find for find and match 
-    if (checkTitle) {
-      res.status(400).send(`Movie title is already on the list!`);
+//POST method to update user's favorite movies (UPDATE)
+app.post('/users/:username/movies/:movieID', (req, res) => {
+ Users.findOneAndUpdate ( 
+  {Username: req.params.username}, 
+  { 
+    $push: { favoriteMovies: req.params.movieID } 
+  },
+  { new: true } 
+ )
+  .then((updatedUser) => {
+    if (!updatedUser) {
+      res.status(400).send(`No user with that username.`);
     } else {
-    user.favoriteMovies.push(movieTitle);
-    res.status(200).send(`${movieTitle} has been added to user ${id}'s favorite movies array!`);
-  }}
+      res.json(updatedUser);
+    }
+  })
+  .catch((error) => {
+    res.status(500).send(`Error: ${error}`);
+  })
 });
 
 //DELETE method to remove a favorite movie (DELETE)

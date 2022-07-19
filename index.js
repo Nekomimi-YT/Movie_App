@@ -120,18 +120,17 @@ app.get('/movies', (req, res) => {
 
 //GET method returning a movie by title as a JSON object (CREATE)
 app.get('/movies/:title', (req, res) => {
-  const { title } = req.params; //object destructuring (const title = res.params.title;)
-  const movie = movies.find(movie => movie.title === title);
-
-  if (movie) {
-    res.status(200).json(movie);
-  } else {
-    res.status(400).send(`${title} not found.`);
-  } 
+  Movies.findOne( {Title: req.params.title})
+    .then((movie) => {
+      res.status(200).json(movie);
+    })
+    .catch ((err) => {
+      res.status(400).send(`Error ${err}`)
+    });
 });
-
+    
 //GET method returning genre and genre description as a JSON object (CREATE)
-app.get('/movies/genre/:genreName', (req, res) => {
+  app.get('/movies/genre/:genreName', (req, res) => {
   const { genreName } = req.params; 
   const genre = movies.find( movie => movie.genre.name === genreName).genre;
 

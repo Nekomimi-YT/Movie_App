@@ -33,31 +33,54 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //POST method to add a new user or update user information (CREATE)
 app.post('/users', (req, res) => {
-  const newUser = req.body;
-
-  if (!newUser.name) {
-    const message = 'You must include your name.';
-    res.status(400).send(message);
-  } else {
-    newUser.id = uuid.v4();
-    users.push(newUser);
-    res.status(201).json(newUser);  //status 201 = create
-  }
+  Users.findOne({ Username: req.body.Username})
+    .then((user) => {
+      if (user) {
+        return res.status(400).send(`${req.body.Username} already exists!`);      
+      } else {
+        Users
+          .create({
+            Username: req.body.Username,
+            Password: req.body.Password,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
+          })
+            .then((user) => {res.status(201).json(user) 
+          })
+          .catch((error) => {
+            console.error(error);
+            res.status(500).send(`Error: ${error}`);
+          })
+      }
+    })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send(`Error: ${error}`);
+      })
 });
 
 //PUT method to update user info (UPDATE)
-app.put('/users/:id', (req, res) => {
-  const { id } = req.params;
-  const updatedUser = req.body;
-
-  let user = users.find(user => user.id == id);  //truthy converts string to number
-
-  if (!user) {
-    res.status(400).send(`No user with that ID.`);
-  } else {
-    user.name = updatedUser.name;
-    res.status(200).json(user);
-  }
+app.put('/users/:username', (req, res) => {
+  Users.findOneAndUpdate ( {Username: req.params.username}, { $set:
+    {
+      Username: req.body.Username,
+      Password: req.body.Password,
+      Email: req.body.Email,
+      Birthday: req.body.Birthday
+    }
+  },
+  { new: true } //return document
+  ) 
+    .then((updatedUser) => {
+      if (!updatedUser) {
+        return res.status(400).send(`${req.params.username} doesn't exist!`);      
+      } else {
+      res.json(updatedUser)
+      }
+    })
+    .catch((error) => {
+      res.status(500).send(`Error: ${error}`);
+    });  
 });
 
 //PUT method to update user's favorite movies (UPDATE)
@@ -130,7 +153,18 @@ app.get('/movies/:title', (req, res) => {
 });
     
 //GET method returning genre and genre description as a JSON object (CREATE)
-  app.get('/movies/genre/:genreName', (req, res) => {
+app.get('/movies/genre/:genreName', (req, res) => {
+  Movies.findOne( {'Genre.Name': req.params.genreName} )
+    .then((genre) => {
+      res.status(200).json(genre.description);
+    })
+    .catch ((err) => {
+      res.status(400).send(`Error: ${err}`); 
+    });
+});
+
+/*
+app.get('/movies/genre/:genreName', (req, res) => {
   const { genreName } = req.params; 
   const genre = movies.find( movie => movie.genre.name === genreName).genre;
 
@@ -139,7 +173,7 @@ app.get('/movies/:title', (req, res) => {
   } else {
     res.status(400).send(`${genreName} not found.`);  //else statement not recognized
   } 
-});
+});*/
 
 //GET method returning director and director bio info as a JSON object (CREATE)
 app.get('/movies/director/:directorName', (req, res) => {

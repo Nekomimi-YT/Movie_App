@@ -5,12 +5,12 @@ let movieSchema = mongoose.Schema({
   Description: {type: String, required: true},
   ReleaseYear: String,
   Genre: {
-    //subdocument
+    //embedded document
     Name: String,
     Description: String
   },
   Director: {
-    //subdocument
+    //enbedded document
     Name: String,
     Bio: String,
     Birth: String,
@@ -28,7 +28,7 @@ let userSchema = mongoose.Schema({
   Password: {type: String, required: true},
   Email: {type: String, required: true},
   Birthday: Date,
-  favoriteMovies: [{type: mongoose.Schema.Types.ObjectId, ref: 'Movie'}]
+  FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }]
 });
 
 let Movie = mongoose.model('Movie', movieSchema); //creates db.movies

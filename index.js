@@ -163,41 +163,23 @@ app.get('/movies/:title', (req, res) => {
 //GET method returning genre and genre description as a JSON object (CREATE)
 app.get('/movies/genre/:genreName', (req, res) => {
   Movies.findOne( {'Genre.Name': req.params.genreName} )
-    .then((genre) => {
-      res.status(200).json(genre.description);
+    .then((movie) => {
+      res.status(200).json(movie.Genre);
     })
     .catch ((err) => {
       res.status(400).send(`Error: ${err}`); 
     });
 });
 
-/*
-app.get('/movies/genre/:genreName', (req, res) => {
-  const { genreName } = req.params; 
-  const genre = movies.find( movie => movie.genre.name === genreName).genre;
-
-  if (genre) {
-    res.status(200).json(genre);
-  } else {
-    res.status(400).send(`${genreName} not found.`);  //else statement not recognized
-  } 
-});*/
-
 //GET method returning director and director bio info as a JSON object (CREATE)
 app.get('/movies/director/:directorName', (req, res) => {
-  const { directorName } = req.params; 
-  const director = movies.find( movie => movie.director.name === directorName).director;
-
-  if (director) {
-    res.status(200).json(director);
-  } else {
-    res.status(400).send(`${directorName} not found.`);  //else statement not recognized
-  } 
-});
-
-//GET methods returning HTML files (CREATE)
-app.get('/', (req, res) => {
-  res.send(`<p>Welcome to the future home of the myFlix App!</p>`);
+  Movies.findOne( {'Director.Name': req.params.directorName} )
+    .then((movie) => {
+      res.status(200).json(movie.Director);
+    })
+    .catch ((err) => {
+      res.status(400).send(`Error: ${err}`); 
+    });
 });
 
 app.get('/documentation', (req, res) => {

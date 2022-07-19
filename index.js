@@ -31,7 +31,7 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//POST method to add a new user or update user information (CREATE)
+//POST method that adds a new user and returns user data as a JSON object (CREATE)
 app.post('/users', (req, res) => {
   Users.findOne({ Username: req.body.Username})
     .then((user) => {
@@ -59,7 +59,7 @@ app.post('/users', (req, res) => {
       })
 });
 
-//PUT method to update user info (UPDATE)
+//PUT method to update user info and return user data as JSON object (UPDATE)
 app.put('/users/:username', (req, res) => {
   Users.findOneAndUpdate ( {Username: req.params.username}, { $set:
     {
@@ -83,12 +83,12 @@ app.put('/users/:username', (req, res) => {
     });  
 });
 
-//POST method to add a movie to the user's favorite movies (CREATE)
+//POST method that adds a movie to the user's favorite movies and returns user data as a JSON object (CREATE)
 app.post('/users/:username/movies/:movieID', (req, res) => {
  Users.findOneAndUpdate ( 
   {Username: req.params.username}, 
   { 
-    $addToSet: { favoriteMovies: req.params.movieID } 
+    $addToSet: { favoriteMovies: req.params.movieID } //prevent duplicates
   },
   { new: true } 
  )
@@ -104,7 +104,7 @@ app.post('/users/:username/movies/:movieID', (req, res) => {
   })
 });
 
-//DELETE method to remove a favorite movie (DELETE)
+//DELETE method that removes a user's favorite movie and returns user data as a JSON object (DELETE)
 app.delete('/users/:username/movies/:movieID', (req, res) => {
   Users.findOneAndUpdate ( 
     {Username: req.params.username}, 
@@ -125,7 +125,7 @@ app.delete('/users/:username/movies/:movieID', (req, res) => {
   })
 });
 
-//DELETE method to remove a user (DELETE)
+//DELETE method to remove all user data (DELETE)
 app.delete('/users/:username', (req, res) => {
   Users.findOneAndRemove({ Username: req.params.username})
     .then((user) => {

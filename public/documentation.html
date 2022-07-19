@@ -27,30 +27,49 @@
     </thead>
     <tbody>
       <tr>
+        <td>Return a welcome message to the user</td>
+        <td>/</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>A text message on an HTML page</td>
+      </tr>
+      <tr>
+        <td>Return app documentation to the user</td>
+        <td>/documentation</td>
+        <td>GET</td>
+        <td>None</td>
+        <td>An HTML documentation page</td>
+      </tr>
+      <tr>
         <td>Return all movies to the user</td>
         <td>/movies</td>
         <td>GET</td>
         <td>None</td>
-        <td>A JSON object holding data about all the movies</td>
+        <td>A JSON object holding the entire movie database<br>
+          Example:<br>
+          <code> {"_id": "12345",<br>
+            "Title: "Dune",<br>
+            "Description": "Movie Description"}</code>
+        </td>
       </tr>
       <tr>
         <td>Return data (description, genre, director, image URL, 
           whether it’s featured or not) about a single movie by title to the user</td>
-        <td>/movies/:Title</td>
+        <td>/movies/:title</td>
         <td>GET</td>
         <td>None</td>
         <td>A JSON object holding all the data about requested movie title</td>
       </tr>
       <tr>
         <td>Return data about a genre (description) by name/title (e.g., “Thriller”)</td>
-        <td>/movies/Genre/:genreName</td>
+        <td>/movies/genre/:genreName</td>
         <td>GET</td>
         <td>None</td>
         <td>A JSON object holding the data for the genre type (description) and more info about requested genre description</td>
       </tr>
       <tr>
         <td>Return data about a director (bio, birth year, death year) by name</td>
-        <td>/movies/Director/:directorName</td>
+        <td>/movies/director/:directorName</td>
         <td>GET</td>
         <td>None</td>
         <td>Return a JSON object with data about a movie's director</td>
@@ -63,29 +82,29 @@
         <td>A JSON object holding data that was added</td>
       </tr>
       <tr>
-        <td>Allow users to update their user info (username)</td>
-        <td>/users</td>
+        <td>Allow users to update their user info</td>
+        <td>/users/:username</td>
         <td>PUT</td>
         <td>None</td>
-        <td>A text message indicating that the userName has been updated</td>
+        <td>An updated JSON object holding all user data</td>
       </tr>
       <tr>
         <td>Allow users to add a movie to their list of favorite movies</td>
-        <td>/users/:_id/:Title</td>
+        <td>/users/:username/movies/:movieID</td>
         <td>PUT</td>
         <td>None</td>
         <td>A text message indicating that the new favorite movie has been added.</td>
       </tr>
       <tr>
         <td>Allow users to delete a movie from their list of favorite movies</td>
-        <td>/users/:_id/:Title</td>
+        <td>/users/:username/movies/:movieID</td>
         <td>DELETE</td>
         <td>None</td>
         <td>A text message indicating that movie has been deleted.</td>
       </tr>
       <tr>
         <td>Allow existing users to deregister by username</td>
-        <td>/users/:Username</td>
+        <td>/users/:username</td>
         <td>DELETE</td>
         <td>None</td>
         <td>A text message showing that a user email has been removed.</td>

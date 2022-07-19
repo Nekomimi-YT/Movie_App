@@ -83,12 +83,12 @@ app.put('/users/:username', (req, res) => {
     });  
 });
 
-//POST method to update user's favorite movies (UPDATE)
+//POST method to add a movie to the user's favorite movies (CREATE)
 app.post('/users/:username/movies/:movieID', (req, res) => {
  Users.findOneAndUpdate ( 
   {Username: req.params.username}, 
   { 
-    $push: { favoriteMovies: req.params.movieID } 
+    $addToSet: { favoriteMovies: req.params.movieID } 
   },
   { new: true } 
  )

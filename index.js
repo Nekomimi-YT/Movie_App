@@ -31,9 +31,14 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//importing auth.js, Passport and passport.js
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
+
 //POST method that adds a new user and returns user data as a JSON object (CREATE)
 app.post('/users', (req, res) => {
-  Users.findOne({ Username: req.body.Username})
+  Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
         return res.status(400).send(`${req.body.Username} already exists!`);      

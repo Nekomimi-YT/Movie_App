@@ -65,7 +65,7 @@ app.post('/users', (req, res) => {
 });
 
 //PUT method to update user info and return user data as JSON object (UPDATE)
-app.put('/users/:username', (req, res) => {
+app.put('/users/:username', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate ( {Username: req.params.username}, { $set:
     {
       Username: req.body.Username,
@@ -89,7 +89,7 @@ app.put('/users/:username', (req, res) => {
 });
 
 //POST method that adds a movie to the user's favorite movies and returns user data as a JSON object (CREATE)
-app.post('/users/:username/movies/:movieID', (req, res) => {
+app.post('/users/:username/movies/:movieID', passport.authenticate('jwt', { session: false }), (req, res) => {
  Users.findOneAndUpdate ( 
   {Username: req.params.username}, 
   { 
@@ -110,7 +110,7 @@ app.post('/users/:username/movies/:movieID', (req, res) => {
 });
 
 //DELETE method that removes a user's favorite movie and returns user data as a JSON object (DELETE)
-app.delete('/users/:username/movies/:movieID', (req, res) => {
+app.delete('/users/:username/movies/:movieID', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate ( 
     {Username: req.params.username}, 
     { 
@@ -131,7 +131,7 @@ app.delete('/users/:username/movies/:movieID', (req, res) => {
 });
 
 //DELETE method to remove all user data (DELETE)
-app.delete('/users/:username', (req, res) => {
+app.delete('/users/:username', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndRemove({ Username: req.params.username})
     .then((user) => {
       if (!user) {
@@ -143,7 +143,7 @@ app.delete('/users/:username', (req, res) => {
 });
   
 //GET method returning all movies as JSON objects (CREATE)
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
   .then((movies) => {
     res.status(200).json(movies);
@@ -155,7 +155,7 @@ app.get('/movies', (req, res) => {
 });
 
 //GET method returning a movie by title as a JSON object (CREATE)
-app.get('/movies/:title', (req, res) => {
+app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne( {Title: req.params.title})
     .then((movie) => {
       res.status(200).json(movie);
@@ -166,7 +166,7 @@ app.get('/movies/:title', (req, res) => {
 });
     
 //GET method returning genre and genre description as a JSON object (CREATE)
-app.get('/movies/genre/:genreName', (req, res) => {
+app.get('/movies/genre/:genreName', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne( {'Genre.Name': req.params.genreName} )
     .then((movie) => {
       res.status(200).json(movie.Genre);
@@ -177,7 +177,7 @@ app.get('/movies/genre/:genreName', (req, res) => {
 });
 
 //GET method returning director and director bio info as a JSON object (CREATE)
-app.get('/movies/director/:directorName', (req, res) => {
+app.get('/movies/director/:directorName', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne( {'Director.Name': req.params.directorName} )
     .then((movie) => {
       res.status(200).json(movie.Director);

@@ -46,13 +46,29 @@ app.use(cors({
   }
 }));
 
+//Importing express-validator
+const { check, validationResult } = require('express-validator');
+
 //importing auth.js, Passport and passport.js
 let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
 //POST method that adds a new user and returns user data as a JSON object (CREATE)
-app.post('/users', (req, res) => {
+app.post('/users', [
+    //Validation logic for request
+    check('Username', 'Username is required').isLength({min: 5}),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+  ], (req, res) => {
+
+  // response for inout errors found with express-validator
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
   let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({ Username: req.body.Username })
     .then((user) => {

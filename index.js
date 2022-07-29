@@ -33,18 +33,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //importing CORS
 const cors = require('cors');
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
-
-app.use(cors({
-  origin: (origin, callback) => {
-    if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
-      let message = 'The CORS policy for this application does not allow access from origin ' + origin;
-      return callback(new Error(message ), false);
-    }
-    return callback(null, true);
-  }
-}));
+app.use(cors());
 
 //Importing express-validator
 const { check, validationResult } = require('express-validator');
@@ -56,11 +45,11 @@ require('./passport');
 
 //POST method that adds a new user and returns user data as a JSON object (CREATE)
 app.post('/users', [
-    //Validation logic for request
-    check('Username', 'Username is required').isLength({min: 5}),
-    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-    check('Password', 'Password is required').not().isEmpty(),
-    check('Email', 'Email does not appear to be valid').isEmail()
+  //Validation logic for request
+  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()
   ], (req, res) => {
 
   // response for inout errors found with express-validator
@@ -103,8 +92,9 @@ app.put('/users/:username', [
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
   check('Email', 'Email does not appear to be valid').isEmail()
-], passport.authenticate('jwt', { session: false }), (req, res) => {
-  // response for input errors found with express-validator
+  ], passport.authenticate('jwt', { session: false }), (req, res) => {
+  
+    // response for input errors found with express-validator
   let errors = validationResult(req);
 
   if (!errors.isEmpty()) {

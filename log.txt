@@ -138,3 +138,8 @@
 ::1 - - [26/Jul/2022:15:41:39 +0000] "POST /users/TestAccount/movies/62d13f51080f943486961a57 HTTP/1.1" 200 244 "-" "PostmanRuntime/7.29.2"
 ::1 - - [26/Jul/2022:15:42:03 +0000] "DELETE /users/TestAccount/movies/62d13f51080f943486961a57 HTTP/1.1" 200 217 "-" "PostmanRuntime/7.29.2"
 ::1 - - [26/Jul/2022:15:42:53 +0000] "DELETE /users/TestAccount/ HTTP/1.1" 200 24 "-" "PostmanRuntime/7.29.2"
+::1 - - [27/Jul/2022:15:47:52 +0000] "POST /users/ HTTP/1.1" 201 230 "-" "PostmanRuntime/7.29.2"
+::1 - - [27/Jul/2022:15:50:52 +0000] "POST /login?Username=TheDemogorgon&Password=crazycoolPsssword HTTP/1.1" 200 713 "-" "PostmanRuntime/7.29.2"
+::1 - - [29/Jul/2022:07:08:53 +0000] "PUT /users/TheDemogorgon HTTP/1.1" 401 - "-" "PostmanRuntime/7.29.2"
+::1 - - [29/Jul/2022:07:11:48 +0000] "POST /login?Username=TheDemogorgon&Password=crazycoolPsssword HTTP/1.1" 200 713 "-" "PostmanRuntime/7.29.2"
+::1 - - [29/Jul/2022:07:14:35 +0000] "PUT /users/TheDemogorgon HTTP/1.1" 200 236 "-" "PostmanRuntime/7.29.2"

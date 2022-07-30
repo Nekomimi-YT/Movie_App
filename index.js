@@ -223,6 +223,10 @@ app.get('/movies/director/:directorName', passport.authenticate('jwt', { session
     });
 });
 
+app.get('/', (req, res) => {
+  res.sendFile('index.html', { root: __dirname });
+});
+
 app.get('/documentation', (req, res) => {
   res.sendFile('public/documentation.html', { root: __dirname });
 });

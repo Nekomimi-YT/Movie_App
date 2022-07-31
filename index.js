@@ -9,7 +9,6 @@ mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifie
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const uuid = require('uuid');
 
 //appending Morgan logs to a file: need built-in node modules fs and path
 const fs = require('fs');

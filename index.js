@@ -178,7 +178,7 @@ app.delete('/users/:username', passport.authenticate('jwt', { session: false }),
 });
   
 //GET method returning all movies as JSON objects (CREATE)
-app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies', /*passport.authenticate('jwt', { session: false }),*/(req, res) => {
   Movies.find()
   .then((movies) => {
     res.status(200).json(movies);

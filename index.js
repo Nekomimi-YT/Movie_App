@@ -190,7 +190,7 @@ app.get('/movies', /*passport.authenticate('jwt', { session: false }),*/(req, re
 });
 
 //GET method returning a movie by title as a JSON object (CREATE)
-app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies/:title', /*passport.authenticate('jwt', { session: false }),*/ (req, res) => {
   Movies.findOne( {Title: req.params.title})
     .then((movie) => {
       res.status(200).json(movie);
@@ -201,7 +201,7 @@ app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req
 });
     
 //GET method returning genre and genre description as a JSON object (CREATE)
-app.get('/movies/genre/:genreName', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies/genre/:genreName',/* passport.authenticate('jwt', { session: false }),*/ (req, res) => {
   Movies.findOne( {'Genre.Name': req.params.genreName} )
     .then((movie) => {
       res.status(200).json(movie.Genre);
@@ -212,7 +212,7 @@ app.get('/movies/genre/:genreName', passport.authenticate('jwt', { session: fals
 });
 
 //GET method returning director and director bio info as a JSON object (CREATE)
-app.get('/movies/director/:directorName', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.get('/movies/director/:directorName',/* passport.authenticate('jwt', { session: false }),*/ (req, res) => {
   Movies.findOne( {'Director.Name': req.params.directorName} )
     .then((movie) => {
       res.status(200).json(movie.Director);

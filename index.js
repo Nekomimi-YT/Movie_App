@@ -7,6 +7,7 @@ const Users = Models.User;
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const express = require('express');
+const cors = require('cors');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
@@ -32,10 +33,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //importing CORS
-const cors = require('cors');
 app.use(cors());
 
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*")
   res.header(
     "Access-Control-Allow-Headers",
@@ -49,7 +49,7 @@ app.use((req, res, next) => {
     return res.status(200).json({})
   }
   next()
-})
+})*/
 
 //Importing express-validator
 const { check, validationResult } = require('express-validator');

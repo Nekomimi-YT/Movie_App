@@ -1,9 +1,7 @@
-//Set up mongoose to connect to myFlixDB (MongoDB)
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 const Movies = Models.Movie;
 const Users = Models.User;
-//mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const express = require('express');
@@ -14,7 +12,6 @@ const bodyParser = require('body-parser');
 //appending Morgan logs to a file: need built-in node modules fs and path
 const fs = require('fs');
 const path = require('path');
-const { clear } = require('console');
 
 const app = express();
 
@@ -28,11 +25,9 @@ app.use(morgan('combined', {stream: accessLogStream}));
 //route requests for static files to the /public folder
 app.use(express.static('public'));
 
-//use body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//importing CORS
 app.use(cors());
 
 /*app.use((req, res, next) => {

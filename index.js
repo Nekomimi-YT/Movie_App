@@ -170,28 +170,28 @@ app.delete('/users/:username', passport.authenticate('jwt', { session: false }),
 });
   
 //GET method returning all movies as JSON objects (CREATE)
-app.get('/movies', /*passport.authenticate('jwt', { session: false }),*/(req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }),(req, res) => {
   Movie.find()
   .then(movies => res.status(200).json(movies))
   .catch(error => res.status(500).send(`Error: ${error}`));
 });
 
 //GET method returning a movie by title as a JSON object (CREATE)
-app.get('/movies/:title', /*passport.authenticate('jwt', { session: false }),*/ (req, res) => {
+app.get('/movies/:title', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movie.findOne({ Title: req.params.title })
     .then(movie => res.status(200).json(movie))
     .catch (error => res.status(400).send(`Error ${error}`))
 });
 
 //GET method returning genre and genre description as a JSON object (CREATE)
-app.get('/movies/genre/:genreName',/* passport.authenticate('jwt', { session: false }),*/ (req, res) => {
+app.get('/movies/genre/:genreName',passport.authenticate('jwt', { session: false }), (req, res) => {
   Movie.findOne( {'Genre.Name': req.params.genreName} )
     .then(movie => res.status(200).json(movie.Genre))
     .catch (error => res.status(400).send(`Error: ${error}`)); 
 });
 
 //GET method returning director and director bio info as a JSON object (CREATE)
-app.get('/movies/director/:directorName',/* passport.authenticate('jwt', { session: false }),*/ (req, res) => {
+app.get('/movies/director/:directorName', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movie.findOne( {'Director.Name': req.params.directorName} )
     .then(movie => res.status(200).json(movie.Director))
     .catch (error => res.status(400).send(`Error: ${error}`)); 

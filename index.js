@@ -76,7 +76,7 @@ app.post('/users', [
             Email: req.body.Email,
             Birthday: req.body.Birthday
           })
-            .then(user => res.status(201).json(user))
+          .then(user => res.status(201).json(user))
           .catch(error => res.status(500).send(`Error: ${error}`));
       }
     })
@@ -195,6 +195,13 @@ app.get('/movies/director/:directorName', passport.authenticate('jwt', { session
   Movie.findOne( {'Director.Name': req.params.directorName} )
     .then(movie => res.status(200).json(movie.Director))
     .catch (error => res.status(400).send(`Error: ${error}`)); 
+});
+
+//GET method returning the user info as a JSON object (CREATE)
+app.get('/users/:username', passport.authenticate('jwt', { session: false }), (req, res) => {
+  User.findOne({ Username: req.params.username })
+    .then(user => res.status(200).json(user))
+    .catch (error => res.status(400).send(`Error ${error}`))
 });
 
 app.get('/', (req, res) => {

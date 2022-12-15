@@ -104,6 +104,8 @@ app.post(
 /**
  * PUT method to update user info and return user data as JSON object (UPDATE)
  * Includes validation
+ * @param username
+ * @returns updated user object
  */
 app.put(
   '/users/:username',
@@ -150,6 +152,9 @@ app.put(
 
 /**
  * POST method that adds a movie to the user's favorite movies and returns user data as a JSON object (CREATE)
+ * @param username
+ * @param movieID
+ * @returns updated user object
  */
 app.post(
   '/users/:username/movies/:movieID',
@@ -175,6 +180,9 @@ app.post(
 
 /**
  * DELETE method that removes a user's favorite movie and returns user data as a JSON object (DELETE)
+ * @param username
+ * @param movieID
+ * @returns updated user object
  */
 app.delete(
   '/users/:username/movies/:movieID',
@@ -200,6 +208,8 @@ app.delete(
 
 /**
  * DELETE method to remove all user data (DELETE)
+ * @param username
+ * @returns success or error message
  */
 app.delete(
   '/users/:username',
@@ -217,6 +227,7 @@ app.delete(
 
 /**
  * GET method returning all movies as JSON objects (CREATE)
+ * @returns movies array of objects
  */
 app.get(
   '/movies',
@@ -230,6 +241,8 @@ app.get(
 
 /**
  * GET method returning a movie by title as a JSON object (CREATE)
+ * @param title
+ * @returns movie object
  */
 app.get(
   '/movies/:title',
@@ -243,6 +256,8 @@ app.get(
 
 /**
  * GET method returning genre and genre description as a JSON object (CREATE)
+ * @param genreName
+ * @returns Genre object
  */
 app.get(
   '/movies/genre/:genreName',
@@ -256,6 +271,8 @@ app.get(
 
 /**
  * GET method returning director and director bio info as a JSON object (CREATE)
+ * @param directorName
+ * @returns Director object
  */
 app.get(
   '/movies/director/:directorName',
@@ -269,6 +286,8 @@ app.get(
 
 /**
  * GET method returning the user info as a JSON object (CREATE)
+ * @param username
+ * @returns user object
  */
 app.get(
   '/users/:username',

@@ -1,3 +1,15 @@
+/**
+ * The LisFlix API uses Express for endpoint access
+ * MongoDB and Mongoose for database and modeling
+ * Express-validator for form validation
+ * And passport for user authorization
+ * See package.json for full list of dependencies
+ * @requires module:express
+ * @requires module:mongoose
+ * @requires module:express-validator
+ * @requires module:passport
+ */
+
 const mongoose = require('mongoose');
 const { Movie, User } = require('./models.js');
 mongoose.connect(process.env.CONNECTION_URI, {
@@ -7,37 +19,49 @@ mongoose.connect(process.env.CONNECTION_URI, {
 
 const express = require('express');
 const cors = require('cors');
-const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const app = express();
-
-//fs and path modules required for morgan
-const fs = require('fs');
-const path = require('path');
-//create a write stream in append mode and add to log.txt in root directory
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
-  flags: 'a'
-});
-
-app.use(morgan('combined', { stream: accessLogStream }));
-
-//route requests for static files to the /public folder
-app.use(express.static('public'));
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(cors());
-
-//Importing express-validator
 const { check, validationResult } = require('express-validator');
-
-//importing auth.js, Passport and passport.js
 require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
-//POST method that adds a new user and returns user data as a JSON object (CREATE)
+/**
+ * Morgan creates logs for endpoint testing
+ * fs and path modules required to use morgan
+ */
+const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path');
+
+/**
+ * Creates a write stream in append mode and logs to log.txt in root directory
+ */
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
+  flags: 'a'
+});
+
+/**
+ * Middleware:
+ * Morgan - endpoint logging
+ * Express.static - routes requests for static files to the /public folder
+ * Bodyparser - parses body JSON info and URL info
+ * Express error catch - log all application-level errors to the terminal
+ */
+app.use(morgan('combined', { stream: accessLogStream }));
+app.use(express.static('public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something's wrong!");
+});
+
+/**
+ * POST method that adds a new user and returns user data as a JSON object (CREATE)
+ * Includes validation
+ */
 app.post(
   '/users',
   [
@@ -51,7 +75,7 @@ app.post(
     check('Email', 'Email does not appear to be valid').isEmail()
   ],
   (req, res) => {
-    // response for inout errors found with express-validator
+    // response for in-out errors found with express-validator
     let errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -77,7 +101,10 @@ app.post(
   }
 );
 
-//PUT method to update user info and return user data as JSON object (UPDATE)
+/**
+ * PUT method to update user info and return user data as JSON object (UPDATE)
+ * Includes validation
+ */
 app.put(
   '/users/:username',
   [
@@ -121,7 +148,9 @@ app.put(
   }
 );
 
-//POST method that adds a movie to the user's favorite movies and returns user data as a JSON object (CREATE)
+/**
+ * POST method that adds a movie to the user's favorite movies and returns user data as a JSON object (CREATE)
+ */
 app.post(
   '/users/:username/movies/:movieID',
   passport.authenticate('jwt', { session: false }),
@@ -144,7 +173,9 @@ app.post(
   }
 );
 
-//DELETE method that removes a user's favorite movie and returns user data as a JSON object (DELETE)
+/**
+ * DELETE method that removes a user's favorite movie and returns user data as a JSON object (DELETE)
+ */
 app.delete(
   '/users/:username/movies/:movieID',
   passport.authenticate('jwt', { session: false }),
@@ -167,7 +198,9 @@ app.delete(
   }
 );
 
-//DELETE method to remove all user data (DELETE)
+/**
+ * DELETE method to remove all user data (DELETE)
+ */
 app.delete(
   '/users/:username',
   passport.authenticate('jwt', { session: false }),
@@ -182,7 +215,9 @@ app.delete(
   }
 );
 
-//GET method returning all movies as JSON objects (CREATE)
+/**
+ * GET method returning all movies as JSON objects (CREATE)
+ */
 app.get(
   '/movies',
   passport.authenticate('jwt', { session: false }),
@@ -193,7 +228,9 @@ app.get(
   }
 );
 
-//GET method returning a movie by title as a JSON object (CREATE)
+/**
+ * GET method returning a movie by title as a JSON object (CREATE)
+ */
 app.get(
   '/movies/:title',
   passport.authenticate('jwt', { session: false }),
@@ -204,7 +241,9 @@ app.get(
   }
 );
 
-//GET method returning genre and genre description as a JSON object (CREATE)
+/**
+ * GET method returning genre and genre description as a JSON object (CREATE)
+ */
 app.get(
   '/movies/genre/:genreName',
   passport.authenticate('jwt', { session: false }),
@@ -215,7 +254,9 @@ app.get(
   }
 );
 
-//GET method returning director and director bio info as a JSON object (CREATE)
+/**
+ * GET method returning director and director bio info as a JSON object (CREATE)
+ */
 app.get(
   '/movies/director/:directorName',
   passport.authenticate('jwt', { session: false }),
@@ -226,7 +267,9 @@ app.get(
   }
 );
 
-//GET method returning the user info as a JSON object (CREATE)
+/**
+ * GET method returning the user info as a JSON object (CREATE)
+ */
 app.get(
   '/users/:username',
   passport.authenticate('jwt', { session: false }),
@@ -237,20 +280,23 @@ app.get(
   }
 );
 
+/**
+ * GET method returning index.html at the root endpoint
+ */
 app.get('/', (req, res) => {
   res.sendFile('index.html', { root: __dirname });
 });
 
+/**
+ * GET method returning documentation file at the /documentation endpoint
+ */
 app.get('/documentation', (req, res) => {
   res.sendFile('public/documentation.html', { root: __dirname });
 });
 
-//log all application-level errors to the terminal
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("Something's wrong!");
-});
-
+/**
+ * Defines the listening port
+ */
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
   console.log(`Listening on Port ${port}`);

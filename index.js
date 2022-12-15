@@ -1,15 +1,3 @@
-/**
- * The LisFlix API uses Express for endpoint access
- * MongoDB and Mongoose for database and modeling
- * Express-validator for form validation
- * And passport for user authorization
- * See package.json for full list of dependencies
- * @requires module:express
- * @requires module:mongoose
- * @requires module:express-validator
- * @requires module:passport
- */
-
 const mongoose = require('mongoose');
 const { Movie, User } = require('./models.js');
 mongoose.connect(process.env.CONNECTION_URI, {
@@ -61,6 +49,8 @@ app.use((err, req, res, next) => {
 /**
  * POST method that adds a new user and returns user data as a JSON object (CREATE)
  * Includes validation
+ * @function registerUser
+ * @returns user
  */
 app.post(
   '/users',
@@ -104,6 +94,7 @@ app.post(
 /**
  * PUT method to update user info and return user data as JSON object (UPDATE)
  * Includes validation
+ * @function updateUser
  * @param username
  * @returns updated user object
  */
@@ -152,6 +143,7 @@ app.put(
 
 /**
  * POST method that adds a movie to the user's favorite movies and returns user data as a JSON object (CREATE)
+ * @function addFavorite
  * @param username
  * @param movieID
  * @returns updated user object
@@ -180,6 +172,7 @@ app.post(
 
 /**
  * DELETE method that removes a user's favorite movie and returns user data as a JSON object (DELETE)
+ * @function deleteFavorite
  * @param username
  * @param movieID
  * @returns updated user object
@@ -208,6 +201,7 @@ app.delete(
 
 /**
  * DELETE method to remove all user data (DELETE)
+ * @function deleteUser
  * @param username
  * @returns success or error message
  */
@@ -227,6 +221,7 @@ app.delete(
 
 /**
  * GET method returning all movies as JSON objects (CREATE)
+ * @function getMovies
  * @returns movies array of objects
  */
 app.get(
@@ -241,6 +236,7 @@ app.get(
 
 /**
  * GET method returning a movie by title as a JSON object (CREATE)
+ * @function getMovieByTitle
  * @param title
  * @returns movie object
  */
@@ -256,6 +252,7 @@ app.get(
 
 /**
  * GET method returning genre and genre description as a JSON object (CREATE)
+ * @function getGenre
  * @param genreName
  * @returns Genre object
  */
@@ -271,6 +268,7 @@ app.get(
 
 /**
  * GET method returning director and director bio info as a JSON object (CREATE)
+ * @function getDirector
  * @param directorName
  * @returns Director object
  */
@@ -286,6 +284,7 @@ app.get(
 
 /**
  * GET method returning the user info as a JSON object (CREATE)
+ * @function getUser
  * @param username
  * @returns user object
  */

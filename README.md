@@ -2,7 +2,7 @@
 
 ### Objective
 
-Build the server-side component of Lislix, a movies web application. The app will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update personal information, and create a list of favorite movies. The project utilizes the MERN stack (MongoDB, Express, React, and Node.js) to explore API development, web server frameworks, databases, business logic, authentication, data security, and more. 
+Build the server-side component of LisFlix, a movies web application. The app will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update personal information, and create a list of favorite movies. The project utilizes the MERN stack (MongoDB, Express, React, and Node.js) to explore API development, web server frameworks, databases, business logic, authentication, data security, and more. 
 
 ### Postman Tests
 

@@ -13,7 +13,7 @@ User Login
 ![User Login](/img/Login.jpg)
 
 Authorise user and get all movies
-![Authorise user and get all movies](/img/GET_movies.jpg)
+![Authorise user and get all movies](/img/Movies.jpg)
 
 ### User Stories
 

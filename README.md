@@ -7,10 +7,10 @@ Build the server-side component of Lislix, a movies web application. The app wil
 ### Postman Tests
 
 User Registration
-![User Registration](/img/Register.png)
+![User Registration](/img/Register.jpg)
 
 User Login
-![User Login](/img/Login.png)
+![User Login](/img/Login.jpg)
 
 Authorise user and get all movies
 ![Authorise user and get all movies](/img/GET_movies.jpg)

@@ -40,7 +40,10 @@ app.use(morgan('combined', { stream: accessLogStream }));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+//app.use(cors());
+app.use(cors({
+  origin: "http://testing-lisflix-react-app.s3-website-us-east-1.amazonaws.com"
+}));
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something's wrong!");
